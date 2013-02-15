@@ -537,7 +537,7 @@ endif
 " }}}
 
 " Remove Trailing Whitespace {{{
-    au FileType * au BufWritePre <buffer> :silent! call standardissue#StripTrailingWhitespace()`
+    au FileType * au BufWritePre <buffer> :silent! call vice#standard_issue#StripTrailingWhitespace()`
 " }}}
 
 " Mappings {{{
@@ -740,7 +740,7 @@ endif
 " }}}
 
 " Diff {{{
-    au FileType gitcommit call s:GitCommit()
+    au FileType gitcommit call vice#standard_issue#GitCommit()
     au FileType gitcommit setl textwidth=80
 
     " Diff options
