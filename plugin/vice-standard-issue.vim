@@ -233,7 +233,7 @@ endif
 " }}}
 
 " Remove Trailing Whitespace {{{
-    au FileType * au BufWritePre <buffer> :silent! call vice#standard_issue#StripTrailingWhitespace()`
+    au FileType * au BufWritePre <buffer> :silent! call vice#standard_issue#StripTrailingWhitespace()
 " }}}
 
 " Mappings {{{
