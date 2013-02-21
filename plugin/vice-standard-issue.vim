@@ -1,3 +1,22 @@
+call vice#Extend({
+    \ 'addons': [
+        \ 'github:michaeljsmith/vim-indent-object',
+        \ 'github:tpope/vim-commentary',
+        \ 'github:tpope/vim-eunuch',
+        \ 'github:tpope/vim-repeat',
+        \ 'github:tpope/vim-surround',
+        \ 'github:zeekay/vim-space',
+    \ ],
+    \ 'ft_addons': {
+        \ 'html\|xhtml\|xml': [
+            \ 'github:gregsexton/MatchTag',
+        \ ],
+    \ },
+    \ 'commands': {
+        \ 'Ack': ['github:mileszs/ack.vim'],
+    \ }
+\ })
+
 " Set VIMHOME
 if has('win32') || has('win64')
     let $VIMHOME = expand('~/vimfiles')
@@ -8,13 +27,9 @@ endif
 " Basic/General Configuration {{{
     set backupdir=$VIMHOME/tmp/backup
     set backup
-    silent! set undofile
-    silent! set undodir=$VIMHOME/tmp/undo
-    set directory=$VIMHOME/tmp/swap
     set noswapfile
     set viewdir=$VIMHOME/tmp/view
     let &viminfo="'100,\"100,:100,h,n".expand($VIMHOME.'/tmp/viminfo')
-    set undolevels=100
     set history=1000
     set backspace=indent,eol,start
     set matchpairs+=<:>
@@ -92,16 +107,28 @@ endif
     au FileType xml setl omnifunc=xmlcomplete#CompleteTags
 " }}}
 
+" Detect filetypes {{{
+    au BufNewFile,BufRead *.as set filetype=actionscript
+    au BufNewFile,BufRead *.clj set filetype=clojure
+    au BufNewFile,BufRead *.coffee,Cakefile set filetype=coffee
+    au BufNewFile,BufRead *.go set filetype=go
+    au BufNewFile,BufRead *.haml set filetype=haml
+    au BufNewFile,BufRead *.jade set filetype=jade
+    au BufNewFile,BufRead *.json set filetype=json
+    au BufNewFile,BufRead *.sass set filetype=sass
+    au BufNewFile,BufRead *.scss set filetype=scss
+    au BufNewFile,BufRead *.styl set filetype=stylus
+    au BufNewFile,BufRead *.{md,mkd,mkdn,mark*} set filetype=markdown
+" }}}
+
 " Console {{{
     if !has('gui_running')
         set t_Co=256
-        colorscheme hornet
     endif
 " }}}
 
 " Gui {{{
     if has('gui_running')
-        colorscheme minimal
         set guioptions=ace
         set fillchars=diff:⣿
         set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
@@ -151,14 +178,7 @@ endif
         let $PATH=substitute('~/.cabal/bin:~/Library/Haskell/bin:/usr/local/share/ruby:/usr/local/share/python:~/.zsh/plugins/osx/lib:/usr/sbin:~/.dotfiles/scripts:~/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Developer/usr/bin:~/.zsh/plugins/clojure/bin', '\~', $HOME, 'g')
 
         set transparency=5
-        fun! TransparencyToggle()
-          if eval("&transparency") == 5
-            let &transparency=0
-          else
-            let &transparency=5
-          endif
-        endf
-        nnoremap <D-u> :call TransparencyToggle()<cr>
+        nnoremap <D-u> :call vice#standard_issue#TransparencyToggle()<cr>
     endif
 " }}}
 
@@ -175,24 +195,9 @@ endif
     endif
 " }}}
 
-" Statusline / Powerline {{{
+" Statusline {{{
     set laststatus=2
     set statusline=\(%n\)\ %f\ %*%#Modified#%m\ (%l/%L,\ %c)\ %P%=%h%w\ %y\ [%{&encoding}:%{&fileformat}]
-    let g:Powerline_symbols_override = {
-        \ 'FUGITIVE': '∓ ',
-        \ 'LAWRENCIUM': '☿ ',
-    \ }
-
-    let g:Powerline_dividers_override = ['', '⏐', '', '⏐']
-
-    if exists('g:loaded_lawrencium') && exists(':Powerline') > 0
-        call Pl#Theme#InsertSegment('lawrencium:branch', 'after', 'fugitive:branch')
-    endif
-" }}}
-
-" EasyMotion {{{
-    let g:EasyMotion_keys = ";,.pyfgcrl/aoeuidhtns-'qjkxbmwvz"
-    let g:EasyMotion_leader_key = '<leader>e'
 " }}}
 
 " Netrw {{{
@@ -208,234 +213,12 @@ endif
     nnoremap <leader>a :Ack!<space>
 " }}}
 
-" Chapa.vim {{{
-    " let g:chapa_no_repeat_mappings = 1
-    let g:chapa_default_mappings = 0
-" }}}
-
 " Commentary {{{
     au FileType cfg set commentstring=#\ %s
     au FileType cpp set commentstring=/\/\ %s
     au FileType python set commentstring=#\ %s
     au FileType lisp set commentstring=;;\ %s
     au FileType json set commentstring=/\/\ %s
-" }}}
-
-" CtrlP {{{
-    let g:ctrlp_map = ""
-    let g:ctrlp_jump_to_buffer = 2
-    let g:ctrlp_working_path_mode = 2
-    let g:ctrlp_use_caching = 1
-    let g:ctrlp_clear_cache_on_exit = 0
-    let g:ctrlp_user_command = {
-	\ 'types': {
-		\ 1: ['.git/', 'cd %s && git ls-files'],
-		\ 2: ['.hg/', 'hg --cwd %s locate -I .'],
-		\ }
-	\ }
-    let g:ctrlp_open_new_file = 1
-    let g:ctrlp_cache_dir = expand($VIMHOME."/tmp/ctrlp_cache")
-    let g:ctrlp_open_multi = '1t'
-    let g:ctrlp_extensions = ['mixed', 'line', 'tag']
-" }}}
-
-" delimitMate {{{
-    let g:delimitMate_autoclose = 1
-    let g:delimitMate_expand_cr = 1
-    let g:delimitMate_expand_space = 1
-    let g:delimitMate_smart_quotes = 1
-    let g:delimitMate_smart_matchpairs = 1
-    let g:delimitMate_balance_matchpairs = 1
-    let g:delimitMate_excluded_ft = "mail,help"
-" }}}
-
-" Nerdtree {{{
-    "" Auto open nerd tree on startup
-    let g:nerdtree_tabs_open_on_gui_startup = 0
-    " Focus in the main content window
-    let g:nerdtree_tabs_focus_on_files = 1
-    " Make nerdtree look nice
-    let g:NERDTreeMinimalUI = 1
-    let g:NERDTreeDirArrows = 1
-    let g:NERDTreeWinSize = 30
-    let g:NERDTreeMouseMode = 3
-    let g:NERDTreeCaseSensitiveSort = 1
-    let g:NERDTreeChDirMode = 2
-
-    " Default key: C/cd
-    let g:NERDTreeMapChdir = 'C'
-
-    " Default key: CD
-    let g:NERDTreeMapCWD = 'cd'
-
-" }}}
-
-" Tabularize {{{
-    vnoremap <silent> <leader>t> :Tabularize /=><cr>
-    vnoremap <silent> <leader>t= :Tabularize /=<cr>
-    vnoremap <silent> <leader>t, :Tabularize /,<cr>
-" }}}
-
-" Tagbar {{{
-    let g:tagbar_autofocus = 1
-    let g:tagbar_compact = 1
-    let g:tagbar_expand = 0
-    let g:tagbar_iconchars = ['▸','▾']
-    let g:tagbar_singleclick = 1
-    let g:tagbar_width = 30
-
-    if executable('coffeetags')
-        let g:tagbar_type_coffee = {
-            \ 'ctagsbin': 'coffeetags',
-            \ 'ctagsargs': '',
-            \ 'sro' : ".",
-            \ 'kinds': [
-                \ 'f:functions',
-                \ 'o:object'
-            \ ],
-            \ 'kind2scope': {
-                \ 'f': 'object',
-                \ 'o': 'object'
-            \ }
-        \ }
-    endif
-
-    if executable('lushtags')
-        let g:tagbar_type_haskell = {
-            \ 'ctagsbin': 'lushtags',
-            \ 'ctagsargs': '--ignore-parse-error --',
-            \ 'sro': '.',
-            \ 'kinds': [
-                \ 'm:module:0',
-                \ 'e:exports:1',
-                \ 'i:imports:1',
-                \ 't:declarations:0',
-                \ 'd:declarations:1',
-                \ 'n:declarations:1',
-                \ 'f:functions:0',
-                \ 'c:constructors:0'
-            \ ],
-            \ 'kind2scope': {
-                \ 'd': 'data',
-                \ 'n': 'newtype',
-                \ 'c': 'constructor',
-                \ 't': 'type'
-            \ },
-            \ 'scope2kind': {
-                \ 'data': 'd',
-                \ 'newtype': 'n',
-                \ 'constructor': 'c',
-                \ 'type': 't'
-            \ }
-        \ }
-    endif
-" }}}
-
-" Syntastic {{{
-    let g:syntastic_enable_signs = 1
-    let g:syntastic_auto_loc_list = 0
-    let g:syntastic_javascript_checker = 'jshint'
-    let g:syntastic_javascript_jshint_conf = $VIMHOME.'/jshint.json'
-    let g:syntastic_python_checker = 'flake8'
-    let g:syntastic_python_checker_args = '--ignore=E221,E225,E231,E251,E302,E303,W391,E501,E702'
-    let g:syntastic_csslint_options = '--ignore=ids'
-    let g:syntastic_coffee_lint_options = '-f '.$VIMHOME.'/coffeelint.json'
-    let g:syntastic_enable_highlighting = 0
-	let g:syntastic_stl_format = '⚡︎ line %F, 1 of %t ⚡︎'
-" }}}
-
-" Undotree {{{
-    let g:undotree_SplitLocation = 'botright'
-" }}}
-
-" Bebop {{{
-  let g:bebop_enabled = 0
-" }}}
-
-" Eclim {{{
-    let g:EclimDisabled = 1
-    let g:EclimTaglistEnabled = 0
-" }}}
-
-" Detect filetypes {{{
-    au BufNewFile,BufRead *.as set filetype=actionscript
-    au BufNewFile,BufRead *.clj set filetype=clojure
-    au BufNewFile,BufRead *.coffee,Cakefile set filetype=coffee
-    au BufNewFile,BufRead *.go set filetype=go
-    au BufNewFile,BufRead *.haml set filetype=haml
-    au BufNewFile,BufRead *.jade set filetype=jade
-    au BufNewFile,BufRead *.json set filetype=json
-    au BufNewFile,BufRead *.sass set filetype=sass
-    au BufNewFile,BufRead *.scss set filetype=scss
-    au BufNewFile,BufRead *.styl set filetype=stylus
-    au BufNewFile,BufRead *.{md,mkd,mkdn,mark*} set filetype=markdown
-" }}}
-
-" Clojure {{{
-    let g:vimclojure#SplitPos = "left"
-    let g:vimclojure#HighlightBuiltins = 1
-    let g:vimclojure#HighlightContrib = 1
-    let g:vimclojure#ParenRainbow = 1
-    let g:vimclojure#DynamicHighlighting = 1
-    if executable('ng')
-        let g:vimclojure#WantNailgun = 1
-    endif
-" }}}
-
-" CoffeeScript {{{
-    au FileType coffee setl foldmethod=indent nofoldenable
-    au FileType coffee setl nosmartindent
-    au FileType coffee map <buffer><leader>r :CoffeeRun<cr>
-    au FileType coffee map <buffer><leader>c :CoffeeCompile watch vertical<cr>
-    au FileType coffee imap <buffer><leader>r <c-o>:CoffeeRun<cr>
-    au FileType coffee imap <buffer><leader>c <c-o>:CoffeeCompile watch vertical<cr>
-" }}}
-
-" Haskell {{{
-    let g:haddock_browser="open"
-" }}}
-
-" Javascript {{{
-    " Run current file in node for quick evaluation
-    func! s:RunInNode()
-        w
-        !node %
-    endf
-
-    func! s:UpdateNodePath()
-      let $NODE_PATH='./node_modules:/usr/local/lib/jsctags/:'.$NODE_PATH
-    endf
-
-    if executable('node')
-        au FileType javascript command! RunInNode call s:RunInNode()
-        au FileType javascript map <buffer><leader>r :RunInNode<cr>
-        au FileType javascript,coffee call s:UpdateNodePath()
-    endif
-" }}}
-
-" JSON {{{
-    au FileType json setl nobomb
-    au FileType json setl conceallevel=0
-" }}}
-
-" Markdown {{{
-    au FileType markdown set textwidth=80
-" }}}
-
-" Python {{{
-    let g:virtualenv_directory = expand($HOME."/ve")
-    let g:python_highlight_all = 1
-    let g:python_show_sync = 1
-    let g:python_print_as_function = 1
-    let g:pythonmode_enable_django = 1
-    let g:pythonmode_enable_rope = 0
-    let g:ropevim_vim_completion = 1
-    let g:ropevim_extended_complete = 1
-    " au FileType python setl foldmethod=syntax
-" }}}
-
-" VimL {{{
-    au FileType vim nnoremap <buffer><leader>r :w<cr> <bar> :so %<cr>
 " }}}
 
 " Fast Escape {{{
@@ -615,17 +398,6 @@ endif
         inoremap < <c-o><c-w><
     endif
 
-    " CtrlP mappings
-    nnoremap gm :CtrlPMixed<cr>
-    nnoremap gl :CtrlPLine<cr>
-    nnoremap gb :CtrlPBuffer<cr>
-    nnoremap go :CtrlP<cr>
-    nnoremap gr :CtrlPMRUFiles<cr>
-
-    " NERDTree, undotree, Tagbar
-    nnoremap <leader>n :NERDTreeToggle<cr>
-    nnoremap <leader>N :NERDTreeCD<cr>
-    nnoremap <leader>u :UndotreeToggle<cr>
     nnoremap <leader>t :TagbarToggle<cr>
 
     " Fast substitute
