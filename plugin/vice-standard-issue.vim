@@ -83,7 +83,7 @@ endif
 
 " Enable omnicomplete {{{
     au FileType c setl omnifunc=ccomplete#Complete
-    au FileType coffee,javascript setl omnifunc=jscomplete#CompleteJS
+    au FileType coffee,javascript setl omnifunc=javascriptcomplete#CompleteJS
     au FileType css setl omnifunc=csscomplete#CompleteCSS
     au FileType php setl omnifunc=phpcomplete#CompletePHP
     au FileType python setl omnifunc=pythoncomplete#Complete
@@ -190,25 +190,9 @@ endif
     endif
 " }}}
 
-" Gitv {{{
-    let g:Gitv_WipeAllOnClose = 1
-    let g:Gitv_OpenPreviewOnLaunch = 1
-    let g:Gitv_DoNotMapCtrlKey = 1
-    cabbrev git Git
-    set lazyredraw
-    augroup git
-        au!
-        au FileType git setl foldlevel=99
-    augroup END
-" }}}
-
 " EasyMotion {{{
     let g:EasyMotion_keys = ";,.pyfgcrl/aoeuidhtns-'qjkxbmwvz"
     let g:EasyMotion_leader_key = '<leader>e'
-" }}}
-
-" Extradite {{{
-    let g:extradite_showhash = 1
 " }}}
 
 " Netrw {{{
@@ -217,75 +201,6 @@ endif
     let g:netrw_banner = 0
     let g:netrw_liststyle = 1
     let g:netrw_list_hide='\.swp$,\.pyc$,\.pyo$,^\.hg$,^\$,^\.svn$,^\.o$,.Trash,.DS_Store,.CFUserTextEncoding'
-" }}}
-
-" neocomplcache {{{
-    if version > 702
-        let g:neocomplcache_enable_at_startup = 1
-        let g:neocomplcache_enable_smart_case = 1
-        let g:neocomplcache_min_syntax_length = 3
-        let g:neocomplcache_auto_completion_start_length = 3
-        let g:neocomplcache_source_disable = {'include_complete' : 1, 'filename_complete' : 0, 'snippets_complete': 1}
-
-        " Define keyword.
-        if !exists('g:neocomplcache_keyword_patterns')
-          let g:neocomplcache_keyword_patterns = {}
-        endif
-        let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-
-        " <CR>: close popup and save indent.
-        function! AutoClosePopup()
-            call neocomplcache#smart_close_popup()
-            " If delimitMate_expand_cr is set, call manually
-            if exists('g:delimitMate_expand_cr') && eval('g:delimitMate_expand_cr')
-                if delimitMate#WithinEmptyPair()
-                    call delimitMate#FlushBuffer()
-                    return "\<Esc>a\<CR>\<Esc>zvO"
-                endif
-            endif
-            return "\<CR>"
-        endf
-        inoremap <expr><CR> AutoClosePopup()
-
-        " <TAB>: completion.
-        " inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-
-        " <C-h>, <BS>: close popup and delete backword char.
-        inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-        inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-        inoremap <expr><space> pumvisible() ? neocomplcache#smart_close_popup()."\<space>" : "\<space>"
-
-        " we don't want the completion menu to auto pop-up when we are in text files
-        let g:neocomplcache_lock_buffer_name_pattern = '\v(\.md|\.txt)'
-
-        " Enable heavy omni completion.
-        if !exists('g:neocomplcache_omni_patterns')
-          let g:neocomplcache_omni_patterns = {}
-        endif
-
-        let g:neocomplcache_omni_patterns.c = '\h\w\w*\|[^.[:digit:] *\t]\%(\.\|->\)'
-        let g:neocomplcache_omni_patterns.coffee = '[^. \t]\.\%(\h\w*\)\?'
-        let g:neocomplcache_omni_patterns.cpp = '\h\w\w*\|[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-        let g:neocomplcache_omni_patterns.go = '\h\w*\%.'
-        let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-        let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-
-        " Enable clang
-        let g:neocomplcache_force_overwrite_completefunc = 1
-        let g:clang_complete_auto = 1
-        let g:clang_auto_select = 1
-        let g:clang_auto_user_options = "path, .clang_complete"
-        let g:clang_complete_copen = 0
-        let g:clang_complete_macros = 1
-        let g:clang_complete_patterns = 0
-        " let g:clang_exec = "clang"
-        let g:clang_hl_errors = 1
-        " let g:clang_library_path = "/usr/local/lib"
-        let g:clang_periodic_quickfix = 0
-        let g:clang_sort_algo = "priority"
-        let g:clang_use_library = 1
-        let g:clang_user_options = ""
-    endif
 " }}}
 
 " Ack.vim {{{
@@ -442,8 +357,9 @@ endif
     let g:EclimTaglistEnabled = 0
 " }}}
 
-" Filetypes {{{
+" Detect filetypes {{{
     au BufNewFile,BufRead *.as set filetype=actionscript
+    au BufNewFile,BufRead *.clj set filetype=clojure
     au BufNewFile,BufRead *.coffee,Cakefile set filetype=coffee
     au BufNewFile,BufRead *.go set filetype=go
     au BufNewFile,BufRead *.haml set filetype=haml
@@ -452,10 +368,10 @@ endif
     au BufNewFile,BufRead *.sass set filetype=sass
     au BufNewFile,BufRead *.scss set filetype=scss
     au BufNewFile,BufRead *.styl set filetype=stylus
+    au BufNewFile,BufRead *.{md,mkd,mkdn,mark*} set filetype=markdown
 " }}}
 
 " Clojure {{{
-    au BufNewFile,BufRead *.clj set filetype=clojure
     let g:vimclojure#SplitPos = "left"
     let g:vimclojure#HighlightBuiltins = 1
     let g:vimclojure#HighlightContrib = 1
@@ -477,11 +393,9 @@ endif
 
 " Haskell {{{
     let g:haddock_browser="open"
-    au FileType haskell setl omnifunc=necoghc#omnifunc
 " }}}
 
 " Javascript {{{
-    let g:jscomplete_use = ['dom', 'moz', 'es6th']
     " Run current file in node for quick evaluation
     func! s:RunInNode()
         w
@@ -505,7 +419,6 @@ endif
 " }}}
 
 " Markdown {{{
-    au BufNewFile,BufRead *.{md,mkd,mkdn,mark*} set filetype=markdown
     au FileType markdown set textwidth=80
 " }}}
 
@@ -740,10 +653,6 @@ endif
 " }}}
 
 " Diff {{{
-    au FileType gitcommit call vice#standard_issue#GitCommit()
-    au FileType gitcommit setl textwidth=80
-
-    " Diff options
     set diffopt+=iwhite,context:3
     if &diff
         nmap u u :diffu<cr>
