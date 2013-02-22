@@ -20,19 +20,14 @@ call vice#Extend({
     \ }
 \ })
 
-" Set VIMHOME
-if has('win32') || has('win64')
-    let $VIMHOME = expand('~/vimfiles')
-else
-    let $VIMHOME = expand('~/.vim')
-endif
+let addon_dir = expand('<sfile>:p:h:h')
 
 " Basic/General Configuration {{{
-    set backupdir=$VIMHOME/tmp/backup
+    exe 'set backupdir='.addon_dir.'/tmp/backup'
     set backup
     set noswapfile
-    set viewdir=$VIMHOME/tmp/view
-    let &viminfo="'100,\"100,:100,h,n".expand($VIMHOME.'/tmp/viminfo')
+    exe 'set viewdir='.addon_dir.'/tmp/view'
+    let &viminfo="'100,\"100,:100,h,n".addon_dir.'/tmp/viminfo'
     set history=1000
     set backspace=indent,eol,start
     set matchpairs+=<:>
