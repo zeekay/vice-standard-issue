@@ -1,6 +1,6 @@
 call vice#Extend({
     \ 'addons': [
-        \ 'github:michaeljsmith/vim-indent-object',
+        \ 'github:coderifous/textobj-word-column.vim',
         \ 'github:tpope/vim-commentary',
         \ 'github:tpope/vim-eunuch',
         \ 'github:tpope/vim-repeat',
@@ -174,7 +174,6 @@ let s:dir = expand('<sfile>:p:h')
         inoremap <D-[> <esc><c-w>W
         inoremap <D-]> <esc><c-w>w
         inoremap <D-CR> <c-o>:set fullscreen!<cr>
-        let $PATH=substitute('~/.cabal/bin:~/Library/Haskell/bin:/usr/local/share/ruby:/usr/local/share/python:~/.zsh/plugins/osx/lib:/usr/sbin:~/.dotfiles/scripts:~/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Developer/usr/bin:~/.zsh/plugins/clojure/bin', '\~', $HOME, 'g')
 
         set transparency=5
         nnoremap <D-u> :call vice#standard_issue#TransparencyToggle()<cr>
@@ -419,6 +418,16 @@ let s:dir = expand('<sfile>:p:h')
         " Close and quit if in terminal
         nnoremap Q :q<cr>
     endif
+
+    " Indent text object mappings
+    onoremap <silent>ai :<C-U>call vice#standard_issue#indent_obj(0)<CR>
+    onoremap <silent>ii :<C-U>call vice#standard_issue#indent_obj(1)<CR>
+    vnoremap <silent>ai :<C-U>call vice#standard_issue#indent_obj(0)<CR><Esc>gv
+    vnoremap <silent>ii :<C-U>call vice#standard_issue#indent_obj(1)<CR><Esc>gv
+    onoremap <silent>aI :<C-U>call vice#standard_issue#indent_obj_inc_blank(0)<CR>
+    onoremap <silent>iI :<C-U>call vice#standard_issue#indent_obj_inc_blank(1)<CR>
+    vnoremap <silent>aI :<C-U>call vice#standard_issue#indent_obj_inc_blank(0)<CR><Esc>gv
+    vnoremap <silent>iI :<C-U>call vice#standard_issue#indent_obj_inc_blank(1)<CR><Esc>gv
 " }}}
 
 " Diff {{{
