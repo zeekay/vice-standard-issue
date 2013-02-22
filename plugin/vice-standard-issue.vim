@@ -1,3 +1,16 @@
+if !exists('g:vice.standard_issue')
+    let g:vice.standard_issue = {}
+endif
+
+if !exists('g:vice.standard_issue.loaded') || &cp
+    let g:vice.standard_issue.loaded = 1
+else
+    finish
+endif
+
+let addon_dir = expand('<sfile>:p:h:h')
+let &rtp.=','.addon_dir
+
 call vice#Extend({
     \ 'addons': [
         \ 'github:michaeljsmith/vim-indent-object',
@@ -19,8 +32,6 @@ call vice#Extend({
         \ 'Ack': ['github:mileszs/ack.vim'],
     \ }
 \ })
-
-let addon_dir = expand('<sfile>:p:h:h')
 
 " Basic/General Configuration {{{
     exe 'set backupdir='.addon_dir.'/tmp/backup'
