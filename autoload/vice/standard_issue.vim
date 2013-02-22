@@ -19,4 +19,5 @@ func! vice#standard_issue#DiffMapping()
     map <buffer> u u :diffupdate!<cr>
     " map <buffer> Q :qa<cr>
     " map <buffer> <leader>q :qa<cr>
+    normal gg]]
 endf
