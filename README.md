@@ -1,2 +1,2 @@
 # vice-standard-issue
-Sane defaults for vice.
+Sane (subjective) defaults for vice.

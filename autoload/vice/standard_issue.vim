@@ -18,7 +18,6 @@ func! vice#standard_issue#DiffMapping()
     map <buffer> [[ :call search('^@@.*@@', 'wb')<cr>zz
     map <buffer> u u :diffupdate!<cr>
     map <buffer> q :q<cr>
-    " map <buffer> Q :qa<cr>
-    " map <buffer> <leader>q :qa<cr>
+    map <buffer> Q :q<cr>
     normal gg]]
 endf
