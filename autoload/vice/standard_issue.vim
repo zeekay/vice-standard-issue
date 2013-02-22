@@ -48,7 +48,7 @@ func! vice#standard_issue#indent_obj(inner)
   endif
 endf
 
-func! vice#standard_issue#indent_text_obj_inc_blank(inner)
+func! vice#standard_issue#indent_obj_inc_blank(inner)
   let curline = line(".")
   let lastline = line("$")
   let i = indent(line(".")) - &shiftwidth * (v:count1 - 1)
