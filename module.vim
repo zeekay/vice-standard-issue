@@ -121,6 +121,7 @@ let s:dir = expand('<sfile>:p:h')
 
 " Console {{{
     if !has('gui_running')
+        set ttyfast
         set t_Co=256
     endif
 " }}}
