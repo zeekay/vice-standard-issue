@@ -11,6 +11,9 @@ call vice#Extend({
         \ 'html\|xhtml\|xml': [
             \ 'github:gregsexton/MatchTag',
         \ ],
+        \ 'help': [
+            \ 'github:juanpabloaj/help.vim',
+        \ ],
     \ },
     \ 'commands': {
         \ 'Ack': ['github:mileszs/ack.vim'],
@@ -398,8 +401,6 @@ endif
         inoremap < <c-o><c-w><
     endif
 
-    nnoremap <leader>t :TagbarToggle<cr>
-
     " Fast substitute
     nnoremap <leader>s :s\v%//<left>
     vnoremap <leader>s :s\v//<left>
@@ -426,11 +427,7 @@ endif
 
 " Diff {{{
     set diffopt+=iwhite,context:3
-    if &diff
-        nmap u u :diffu<cr>
-        nmap Q :qa<cr>
-        nmap <leader>q :qa<cr>
-    endif
+    au FileType diff call vice#standard_issue#DiffMapping()
 " }}}
 
 " Quickfix / location list {{{
