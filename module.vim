@@ -451,6 +451,7 @@ let s:dir = expand('<sfile>:p:h')
 " }}}
 
 " Hax {{{
+    " prevent changing read-only file warnings.
     au FileChangedRO * setl noro
 " }}}
 
