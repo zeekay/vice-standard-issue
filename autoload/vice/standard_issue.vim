@@ -13,12 +13,24 @@ func! vice#standard_issue#TransparencyToggle()
     endif
 endf
 
+func! vice#standard_issue#close_diff()
+    windo if &diff || &ft == 'diff' | q | endif
+endf
+
 func! vice#standard_issue#DiffMapping()
-    map <buffer> ]] :call search('^@@.*@@', 'w')<cr>zz
-    map <buffer> [[ :call search('^@@.*@@', 'wb')<cr>zz
+    if &diff
+        map <buffer> ]] ]c
+        map <buffer> [[ [c
+    else
+        map <buffer> ]] :call search('^@@.*@@', 'w')<cr>zz
+        map <buffer> [[ :call search('^@@.*@@', 'wb')<cr>zz
+    endif
     map <buffer> u u :diffupdate!<cr>
-    map <buffer> q :q<cr>
-    map <buffer> Q :q<cr>
+    map <buffer> \q :call vice#standard_issue#close_diff()<cr>
+    map <buffer> q :call vice#standard_issue#close_diff()<cr>
+    map <buffer> Q :call vice#standard_issue#close_diff()<cr>
+    " This is causes E855: Autocommands caused command to abort :(
+    " au BufWinLeave <buffer> call vice#standard_issue#close_diff()
     normal gg]]
 endf
 

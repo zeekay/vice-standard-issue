@@ -433,6 +433,9 @@ let s:dir = expand('<sfile>:p:h')
 " Diff {{{
     set diffopt+=iwhite,context:3
     au FileType diff call vice#standard_issue#DiffMapping()
+    if &diff
+        call vice#standard_issue#DiffMapping()
+    endif
 " }}}
 
 " Quickfix / location list {{{
