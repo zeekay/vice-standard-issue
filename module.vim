@@ -207,7 +207,7 @@ let s:dir = expand('<sfile>:p:h')
 " }}}
 
 " Ack.vim {{{
-    let g:ackprg = "ack -i -H --nocolor --nogroup --column --text"
+    let g:ackprg = "ack -i -H --nocolor --nogroup --column"
     nnoremap <leader>a :Ack!<space>
 " }}}
 
