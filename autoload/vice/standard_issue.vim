@@ -1,11 +1,11 @@
 " Trim trailing whitespace from a file
-func! vice#standard_issue#StripTrailingWhitespace()
+func! vice#standard_issue#strip_trailing_whitespace()
     normal mZ
     %s/\s\+$//e
     normal `Z
 endf
 
-func! vice#standard_issue#TransparencyToggle()
+func! vice#standard_issue#transparency_toggle()
     if eval("&transparency") == 5
         let &transparency=0
     else
@@ -13,25 +13,35 @@ func! vice#standard_issue#TransparencyToggle()
     endif
 endf
 
-func! vice#standard_issue#close_diff()
+func! vice#standard_issue#diff_close()
     windo if &diff || &ft == 'diff' | q | endif
 endf
 
-func! vice#standard_issue#DiffMapping()
-    if &diff
-        map <buffer> ]] ]c
-        map <buffer> [[ [c
+func! vice#standard_issue#diff_mapping()
+    if exists('b:diff_mapping')
+        return
     else
-        map <buffer> ]] :call search('^@@.*@@', 'w')<cr>zz
-        map <buffer> [[ :call search('^@@.*@@', 'wb')<cr>zz
+        let b:diff_mapping = 1
     endif
-    map <buffer> u u :diffupdate!<cr>
-    map <buffer> \q :call vice#standard_issue#close_diff()<cr>
-    map <buffer> q :call vice#standard_issue#close_diff()<cr>
-    map <buffer> Q :call vice#standard_issue#close_diff()<cr>
-    " This is causes E855: Autocommands caused command to abort :(
-    " au BufWinLeave <buffer> call vice#standard_issue#close_diff()
-    normal gg]]
+
+
+    if &diff
+        nnoremap <buffer> ]] ]c
+        nnoremap <buffer> [[ [c
+    else
+        nnoremap <buffer> ]] :call search('^@@.*@@', 'w')<cr>zz
+        nnoremap <buffer> [[ :call search('^@@.*@@', 'wb')<cr>zz
+    endif
+
+    nnoremap <buffer> [] <Nop>
+    nnoremap <buffer> ][ <Nop>
+
+    nnoremap <buffer> u u :diffupdate!<cr>
+    nnoremap <buffer> \q :call vice#standard_issue#diff_close()<cr>
+    nnoremap <buffer> q :call vice#standard_issue#diff_close()<cr>
+    nnoremap <buffer> Q :call vice#standard_issue#diff_close()<cr>
+
+    normal gg]c
 endf
 
 func! vice#standard_issue#indent_obj(inner)
