@@ -176,7 +176,7 @@ let s:dir = expand('<sfile>:p:h')
         inoremap <D-CR> <c-o>:set fullscreen!<cr>
 
         set transparency=5
-        nnoremap <D-u> :call vice#standard_issue#TransparencyToggle()<cr>
+        nnoremap <D-u> :call vice#standard_issue#transparency_toggle()<cr>
     endif
 " }}}
 
@@ -231,7 +231,7 @@ let s:dir = expand('<sfile>:p:h')
 " }}}
 
 " Remove Trailing Whitespace {{{
-    au FileType * au BufWritePre <buffer> :silent! call vice#standard_issue#StripTrailingWhitespace()
+    au FileType * au BufWritePre <buffer> :silent! call vice#standard_issue#strip_trailing_whitespace()
 " }}}
 
 " Mappings {{{
@@ -420,22 +420,20 @@ let s:dir = expand('<sfile>:p:h')
     endif
 
     " Indent text object mappings
-    onoremap <silent>ai :<C-U>call vice#standard_issue#indent_obj(0)<CR>
-    onoremap <silent>ii :<C-U>call vice#standard_issue#indent_obj(1)<CR>
-    vnoremap <silent>ai :<C-U>call vice#standard_issue#indent_obj(0)<CR><Esc>gv
-    vnoremap <silent>ii :<C-U>call vice#standard_issue#indent_obj(1)<CR><Esc>gv
-    onoremap <silent>aI :<C-U>call vice#standard_issue#indent_obj_inc_blank(0)<CR>
-    onoremap <silent>iI :<C-U>call vice#standard_issue#indent_obj_inc_blank(1)<CR>
-    vnoremap <silent>aI :<C-U>call vice#standard_issue#indent_obj_inc_blank(0)<CR><Esc>gv
-    vnoremap <silent>iI :<C-U>call vice#standard_issue#indent_obj_inc_blank(1)<CR><Esc>gv
+    onoremap <silent>aI :<C-U>call vice#standard_issue#indent_obj(0)<CR>
+    onoremap <silent>iI :<C-U>call vice#standard_issue#indent_obj(1)<CR>
+    vnoremap <silent>aI :<C-U>call vice#standard_issue#indent_obj(0)<CR><Esc>gv
+    vnoremap <silent>iI :<C-U>call vice#standard_issue#indent_obj(1)<CR><Esc>gv
+    onoremap <silent>ai :<C-U>call vice#standard_issue#indent_obj_inc_blank(0)<CR>
+    onoremap <silent>ii :<C-U>call vice#standard_issue#indent_obj_inc_blank(1)<CR>
+    vnoremap <silent>ai :<C-U>call vice#standard_issue#indent_obj_inc_blank(0)<CR><Esc>gv
+    vnoremap <silent>ii :<C-U>call vice#standard_issue#indent_obj_inc_blank(1)<CR><Esc>gv
 " }}}
 
 " Diff {{{
     set diffopt+=iwhite,context:3
-    au FileType diff call vice#standard_issue#DiffMapping()
-    if &diff
-        call vice#standard_issue#DiffMapping()
-    endif
+    au FileType diff call vice#standard_issue#diff_mapping()
+    au FilterWritePre * if &diff | call vice#standard_issue#diff_mapping() | endif
 " }}}
 
 " Quickfix / location list {{{
