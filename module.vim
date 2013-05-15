@@ -430,10 +430,6 @@ let s:dir = expand('<sfile>:p:h')
     vnoremap <silent>ii :<C-U>call vice#standard_issue#indent_obj_inc_blank(1)<CR><Esc>gv
 " }}}
 
-" Gitcommit {{{
-    au FileType gitcommit call vice#standard_issue#git_commit()
-" }}}
-
 " Diff {{{
     set diffopt+=iwhite,context:3
     au FileType diff call vice#standard_issue#diff_mapping()

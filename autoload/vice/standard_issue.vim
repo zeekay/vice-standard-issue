@@ -13,16 +13,6 @@ func! vice#standard_issue#transparency_toggle()
     endif
 endf
 
-" This hack ensures I don't automatically commit a merge
-func! vice#standard_issue#git_commit()
-    " Jump to first comment
-    call search('^#', 'w')
-    let linenr = line('.')
-    " write partial file (omitting non-commented lines)
-    exe linenr . ',$w!'
-    normal gg
-endf
-
 func! vice#standard_issue#diff_close()
     windo if &diff || &ft == 'diff' | q | endif
 endf
