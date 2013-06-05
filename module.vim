@@ -17,6 +17,7 @@ call vice#Extend({
     \ },
     \ 'commands': {
         \ 'Ack': ['github:mileszs/ack.vim'],
+        \ 'Calc': ['github:gregsexton/VimCalc'],
     \ }
 \ })
 
@@ -52,7 +53,6 @@ let s:dir = expand('<sfile>:p:h')
     set nomore
     set nrformats=hex,octal,alpha
     set clipboard=unnamed,unnamedplus
-    silent! set breakindent
 " }}}
 
 " Indent {{{
@@ -64,8 +64,6 @@ let s:dir = expand('<sfile>:p:h')
     set autoindent
     set copyindent
     set smartindent
-    au FileType xml,xhtml,htmldjango setl shiftwidth=4
-    au FileType css,html,coffee,haml,stylus,jade,javascript setl shiftwidth=2
 " }}}
 
 " Search/Highlight {{{
@@ -92,31 +90,6 @@ let s:dir = expand('<sfile>:p:h')
     set wildignore+=classes " Clojure/leiningen
     set wildignore+=migrations " Django migrations
     set wildignore+=*.zwc,*.zwc.old " ZSH
-" }}}
-
-" Enable omnicomplete {{{
-    au FileType c setl omnifunc=ccomplete#Complete
-    au FileType coffee,javascript setl omnifunc=javascriptcomplete#CompleteJS
-    au FileType css setl omnifunc=csscomplete#CompleteCSS
-    au FileType php setl omnifunc=phpcomplete#CompletePHP
-    au FileType python setl omnifunc=pythoncomplete#Complete
-    au FileType ruby,eruby setl omnifunc=rubycomplete#Complete
-    au FileType xhtml,html setl omnifunc=htmlcomplete#CompleteTags
-    au FileType xml setl omnifunc=xmlcomplete#CompleteTags
-" }}}
-
-" Detect filetypes {{{
-    au BufNewFile,BufRead *.as set filetype=actionscript
-    au BufNewFile,BufRead *.clj set filetype=clojure
-    au BufNewFile,BufRead *.coffee,Cakefile set filetype=coffee
-    au BufNewFile,BufRead *.go set filetype=go
-    au BufNewFile,BufRead *.haml set filetype=haml
-    au BufNewFile,BufRead *.jade set filetype=jade
-    au BufNewFile,BufRead *.json set filetype=json
-    au BufNewFile,BufRead *.sass set filetype=sass
-    au BufNewFile,BufRead *.scss set filetype=scss
-    au BufNewFile,BufRead *.styl set filetype=stylus
-    au BufNewFile,BufRead *.{md,mkd,mkdn,mark*} set filetype=markdown
 " }}}
 
 " Console {{{
@@ -235,26 +208,6 @@ let s:dir = expand('<sfile>:p:h')
 " }}}
 
 " Mappings {{{
-    if exists('g:disable_arrow_keys') && g:disable_arrow_keys
-        " No arrow keys
-        map <Left> :echo<cr>
-        map <Right> :echo<cr>
-        map <Up> :echo<cr>
-        map <Down> :echo<cr>
-        imap <Left> <c-o>:echo<cr>
-        imap <Right> <c-o>:echo<cr>
-        imap <Up> <c-o>:echo<cr>
-        imap <Down> <c-o>:echo<cr>
-        map OD :echo<cr>
-        map OC :echo<cr>
-        map OA :echo<cr>
-        map OB :echo<cr>
-        imap OD <c-o>:echo<cr>
-        imap OC <c-o>:echo<cr>
-        imap OA <c-o>:echo<cr>
-        imap OB <c-o>:echo<cr>
-    endif
-
     " Stay in visual mode after indentation change
     vnoremap > >gv
     vnoremap < <gv
@@ -395,10 +348,6 @@ let s:dir = expand('<sfile>:p:h')
         inoremap > <c-o><c-w>>
         inoremap < <c-o><c-w><
     endif
-
-    " Fast substitute
-    nnoremap <leader>s :s\v%//<left>
-    vnoremap <leader>s :s\v//<left>
 
     " Open in browser
     nnoremap <leader>of :py import webbrowser; webbrowser.open(<c-r>='"'.'file://'.expand('%:p').'"'<cr>)<cr>
