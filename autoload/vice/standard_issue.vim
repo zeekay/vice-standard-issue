@@ -42,6 +42,19 @@ func! vice#standard_issue#diff_mapping()
     nnoremap <buffer> Q :call vice#standard_issue#diff_close()<cr>
 
     normal gg]c
+
+    " Automatically update diff on changes
+    augroup auto_diff_update
+      au!
+      autocmd InsertLeave * if &diff | diffupdate | let b:old_changedtick = b:changedtick | endif
+      autocmd CursorHold *
+            \ if &diff &&
+            \    (!exists('b:old_changedtick') || b:old_changedtick != b:changedtick) |
+            \   let b:old_changedtick = b:changedtick | diffupdate |
+            \ endif
+    augroup END
+    nnoremap <silent> do do:let b:old_changedtick = b:changedtick<CR>
+    nnoremap <silent> dp dp<C-W>w:if &modifiable && &diff \| let b:old_changedtick = b:changedtick \| endif<CR><C-W>p
 endf
 
 func! vice#standard_issue#indent_obj(inner)
@@ -110,6 +123,8 @@ func! vice#standard_issue#detect_long_line()
 
     let b:__vice_detect_long_line = 1
 
+    let original_line = line('.')
+
     let line = 1
     while line <= line("$")
         call cursor(line, 0)
@@ -118,15 +133,19 @@ func! vice#standard_issue#detect_long_line()
         if col('$') > 2000
             silent! NeoComplCacheDisable
             NoMatchParen
+            call cursor(original_line, 0)
             echo "Long line detected! NeoComplCache and MatchParen disabled."
             return
         endif
 
         " Bail if file is exceptionally long to prevent delay in load times.
         if line > 2000
+            call cursor(original_line, 0)
             return
         endif
 
         let line += 1
     endwhile
+
+    call cursor(original_line, 0)
 endf
