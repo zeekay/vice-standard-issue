@@ -53,6 +53,11 @@ let s:dir = expand('<sfile>:p:h')
     set nomore
     set nrformats=hex,octal,alpha
     set clipboard=unnamed,unnamedplus
+    set nocursorline
+    set nocursorcolumn
+    set synmaxcol=1000
+    let g:matchparen_insert_timeout = 60
+    let g:matchparen_timeout = 60
 " }}}
 
 " Indent {{{
@@ -403,6 +408,9 @@ let s:dir = expand('<sfile>:p:h')
 " Hax {{{
     " prevent changing read-only file warnings.
     au FileChangedRO * setl noro
+
+    " Optimize when long line discovered, call NoMatchParen, etc
+    au BufWinEnter * call vice#standard_issue#detect_long_line()
 " }}}
 
 " vim: fdm=marker foldlevel=1 nofoldenable

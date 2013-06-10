@@ -102,3 +102,31 @@ func! vice#standard_issue#indent_obj_inc_blank(inner)
   endif
   normal! $
 endf
+
+func! vice#standard_issue#detect_long_line()
+    if exists('b:__vice_detect_long_line')
+        return
+    endif
+
+    let b:__vice_detect_long_line = 1
+
+    let line = 1
+    while line <= line("$")
+        call cursor(line, 0)
+
+        " Disable NeoComplcache and MatchParen when a long line is detected
+        if col('$') > 2000
+            silent! NeoComplCacheDisable
+            NoMatchParen
+            echo "Long line detected! NeoComplCache and MatchParen disabled."
+            return
+        endif
+
+        " Bail if file is exceptionally long to prevent delay in load times.
+        if line > 2000
+            return
+        endif
+
+        let line += 1
+    endwhile
+endf
