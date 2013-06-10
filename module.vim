@@ -452,7 +452,7 @@ call vice#Extend({
     " before writing a file when editing in hex mode, convert back to non-hex
     au BufWritePre *
           \ if exists("b:editHex") && b:editHex && &binary |
-          \  let oldro=&ro | let &ro=0 |
+          \  undojoin | let oldro=&ro | let &ro=0 |
           \  let oldma=&ma | let &ma=1 |
           \  silent exe "%!xxd -r" |
           \  let &ma=oldma | let &ro=oldro |
@@ -462,7 +462,7 @@ call vice#Extend({
     " after writing a binary file, if we're in hex mode, restore hex mode
     au BufWritePost *
           \ if exists("b:editHex") && b:editHex && &binary |
-          \  let oldro=&ro | let &ro=0 |
+          \  undojoin | let oldro=&ro | let &ro=0 |
           \  let oldma=&ma | let &ma=1 |
           \  silent exe "%!xxd" |
           \  exe "set nomod" |
