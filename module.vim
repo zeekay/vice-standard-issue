@@ -21,14 +21,12 @@ call vice#Extend({
     \ }
 \ })
 
-let s:dir = expand('<sfile>:p:h')
-
 " Basic/General Configuration {{{
-    exe 'set backupdir='.s:dir.'/tmp/backup'
+    exe 'set backupdir='.g:vice.addon_dir.'/tmp/backup'
     set backup
     set noswapfile
-    exe 'set viewdir='.s:dir.'/tmp/view'
-    let &viminfo="'100,\"100,:100,h,n".s:dir.'/tmp/viminfo'
+    exe 'set viewdir='.g:vice.addon_dir.'/tmp/view'
+    let &viminfo="'100,\"100,:100,h,n".g:vice.addon_dir.'/tmp/viminfo'
     set history=1000
     set backspace=indent,eol,start
     set matchpairs+=<:>
