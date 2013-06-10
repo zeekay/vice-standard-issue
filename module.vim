@@ -51,11 +51,6 @@ call vice#Extend({
     set nomore
     set nrformats=hex,octal,alpha
     set clipboard=unnamed,unnamedplus
-    set nocursorline
-    set nocursorcolumn
-    set synmaxcol=1000
-    let g:matchparen_insert_timeout = 60
-    let g:matchparen_timeout = 60
 " }}}
 
 " Indent {{{
@@ -67,6 +62,17 @@ call vice#Extend({
     set autoindent
     set copyindent
     set smartindent
+" }}}
+
+" Syntax {{{
+    " Performance tweaks
+    set nocursorline
+    set nocursorcolumn
+    set synmaxcol=1000
+    syntax sync minlines=256
+
+    let g:matchparen_insert_timeout = 60
+    let g:matchparen_timeout = 60
 " }}}
 
 " Search/Highlight {{{
