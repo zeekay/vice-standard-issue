@@ -189,9 +189,10 @@ call vice#Extend({
 " Commentary {{{
     au FileType cfg set commentstring=#\ %s
     au FileType cpp set commentstring=/\/\ %s
-    au FileType python set commentstring=#\ %s
-    au FileType lisp set commentstring=;;\ %s
     au FileType json set commentstring=/\/\ %s
+    au FileType lisp set commentstring=;;\ %s
+    au FileType nginx set commentstring=#\ %s
+    au FileType python set commentstring=#\ %s
 " }}}
 
 " Fast Escape {{{
