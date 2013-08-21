@@ -132,7 +132,7 @@ func! vice#standard_issue#detect_long_line()
         " Disable NeoComplcache and MatchParen when a long line is detected
         if col('$') > 2000
             silent! NeoComplCacheDisable
-            NoMatchParen
+            silent! NoMatchParen
             call cursor(original_line, 0)
             echo "Long line detected! NeoComplCache and MatchParen disabled."
             return

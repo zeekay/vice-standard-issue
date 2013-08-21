@@ -4,6 +4,7 @@ call vice#Extend({
         \ 'github:tpope/vim-commentary',
         \ 'github:tpope/vim-eunuch',
         \ 'github:tpope/vim-repeat',
+        \ 'github:tpope/vim-speeddating',
         \ 'github:tpope/vim-surround',
         \ 'github:zeekay/vim-space',
     \ ],
@@ -26,7 +27,7 @@ call vice#Extend({
     set backup
     set noswapfile
     exe 'set viewdir='.g:vice.addon_dir.'/tmp/view'
-    let &viminfo="'100,\"100,:100,h,n".g:vice.addon_dir.'/tmp/viminfo'
+    let &viminfo="'100,\"100,h,n".g:vice.addon_dir.'/tmp/viminfo'
     set history=1000
     set backspace=indent,eol,start
     set matchpairs+=<:>
