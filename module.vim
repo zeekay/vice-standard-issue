@@ -409,7 +409,10 @@ call vice#Extend({
     au FileChangedRO * setl noro
 
     " Optimize when long line discovered, call NoMatchParen, etc
-    au BufWinEnter * call vice#standard_issue#detect_long_line()
+    " No longer seems necessary in Vim 7.4, with improved regex engine.
+    if version < 704
+        au BufWinEnter * call vice#standard_issue#detect_long_line()
+    endif
 " }}}
 
 " Hex {{{
