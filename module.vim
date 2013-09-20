@@ -65,7 +65,6 @@ call vice#Extend({
     set expandtab
     set smarttab
     set autoindent
-    set nocindent
     set copyindent
     set smartindent
     set nocindent
