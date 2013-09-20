@@ -74,6 +74,7 @@ call vice#Extend({
     set showmatch
     set incsearch
     set smartcase
+    set ignorecase
 " }}}
 
 " Menu/Complete {{{
