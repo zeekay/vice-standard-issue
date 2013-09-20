@@ -67,6 +67,7 @@ call vice#Extend({
     set autoindent
     set copyindent
     set smartindent
+    set nocindent
 " }}}
 
 " Search/Highlight {{{
@@ -190,6 +191,7 @@ call vice#Extend({
 " Commentary {{{
     au FileType cfg set commentstring=#\ %s
     au FileType cpp set commentstring=/\/\ %s
+    au FileType iss set commentstring=;\ %s
     au FileType json set commentstring=/\/\ %s
     au FileType lisp set commentstring=;;\ %s
     au FileType nginx set commentstring=#\ %s
