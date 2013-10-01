@@ -17,7 +17,8 @@ call vice#Extend({
         \ ],
     \ },
     \ 'commands': {
-        \ 'Ack': ['github:mileszs/ack.vim'],
+        \ 'Ack':  ['github:mileszs/ack.vim'],
+        \ 'Ag':   ['github:rking/ag.vim'],
         \ 'Calc': ['github:gregsexton/VimCalc'],
     \ }
 \ })
