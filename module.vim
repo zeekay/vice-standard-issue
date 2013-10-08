@@ -191,6 +191,7 @@ call vice#Extend({
 
 " Commentary {{{
     au FileType cfg set commentstring=#\ %s
+    au FileType sql set commentstring=--\ %s
     au FileType cpp set commentstring=/\/\ %s
     au FileType iss set commentstring=;\ %s
     au FileType json set commentstring=/\/\ %s
