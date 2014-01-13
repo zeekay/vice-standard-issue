@@ -23,6 +23,10 @@ call vice#Extend({
     \ }
 \ })
 
+if !exists('g:vice.standard_issue')
+    let g:vice.standard_issue = {'transparency': 5}
+endif
+
 " Basic/General Configuration {{{
     exe 'set backupdir='.g:vice.addon_dir.'/tmp/backup'
     set backup
@@ -154,7 +158,7 @@ call vice#Extend({
         inoremap <D-]> <esc><c-w>w
         inoremap <D-CR> <c-o>:set fullscreen!<cr>
 
-        set transparency=5
+        exe 'set transparency='.g:vice.standard_issue.transparency
         nnoremap <D-u> :call vice#standard_issue#transparency_toggle()<cr>
     endif
 " }}}
