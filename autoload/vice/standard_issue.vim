@@ -6,10 +6,10 @@ func! vice#standard_issue#strip_trailing_whitespace()
 endf
 
 func! vice#standard_issue#transparency_toggle()
-    if eval("&transparency") == 5
-        let &transparency=0
+    if eval("&transparency") > 0
+        set transparency=0
     else
-        let &transparency=5
+        exe 'set transparency='.g:vice.standard_issue.transparency
     endif
 endf
 
@@ -160,6 +160,7 @@ function vice#standard_issue#toggle_hex()
   let &readonly=0
   let l:oldmodifiable=&modifiable
   let &modifiable=1
+
   if !exists("b:editHex") || !b:editHex
     " save old options
     let b:oldft=&ft
@@ -174,14 +175,17 @@ function vice#standard_issue#toggle_hex()
   else
     " restore old options
     let &ft=b:oldft
+
     if !b:oldbin
       setlocal nobinary
     endif
+
     " set status
     let b:editHex=0
     " return to normal editing
     %!xxd -r
   endif
+
   " restore values for modified and read only state
   let &mod=l:modified
   let &readonly=l:oldreadonly
