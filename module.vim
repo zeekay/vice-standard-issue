@@ -7,6 +7,7 @@ call vice#Extend({
         \ 'github:tpope/vim-speeddating',
         \ 'github:tpope/vim-surround',
         \ 'github:zeekay/vim-space',
+        \ 'github:tommcdo/vim-exchange',
     \ ],
     \ 'ft_addons': {
         \ 'html\|xhtml\|xml': [
@@ -390,6 +391,9 @@ endif
     onoremap <silent>ii :<C-U>call vice#standard_issue#indent_obj_inc_blank(1)<CR>
     vnoremap <silent>ai :<C-U>call vice#standard_issue#indent_obj_inc_blank(0)<CR><Esc>gv
     vnoremap <silent>ii :<C-U>call vice#standard_issue#indent_obj_inc_blank(1)<CR><Esc>gv
+
+    " Use cx in visual mode for exchange.
+    vmap cx <Plug>(Exchange)
 " }}}
 
 " Diff {{{
