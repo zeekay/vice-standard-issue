@@ -2,10 +2,10 @@ call vice#Extend({
     \ 'addons': [
         \ 'github:coderifous/textobj-word-column.vim',
         \ 'github:tpope/vim-commentary',
-        \ 'github:tpope/vim-eunuch',
         \ 'github:tpope/vim-repeat',
         \ 'github:tpope/vim-speeddating',
         \ 'github:tpope/vim-surround',
+        \ 'github:zeekay/vim-eunuch',
         \ 'github:zeekay/vim-space',
         \ 'github:tommcdo/vim-exchange',
     \ ],
