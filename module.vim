@@ -182,6 +182,19 @@ endif
     set statusline=\(%n\)\ %f\ %*%#Modified#%m\ (%l/%L,\ %c)\ %P%=%h%w\ %y\ [%{&encoding}:%{&fileformat}]
 " }}}
 
+" Repeat {{{
+    " repeat across visual selection
+    xnoremap . :norm.<cr>
+
+    " macro across visual selection
+    xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+    function! ExecuteMacroOverVisualRange()
+      echo "@".getcmdline()
+      execute ":'<,'>normal @".nr2char(getchar())
+    endfunction
+" }}}
+
 " Netrw {{{
     let g:netrw_silent = 1
     let g:netrw_cursor = 0
