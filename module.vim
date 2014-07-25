@@ -8,6 +8,7 @@ call vice#Extend({
         \ 'github:zeekay/vim-eunuch',
         \ 'github:zeekay/vim-space',
         \ 'github:tommcdo/vim-exchange',
+        \ 'github:kshenoy/vim-signature',
     \ ],
     \ 'ft_addons': {
         \ 'html\|xhtml\|xml': [
