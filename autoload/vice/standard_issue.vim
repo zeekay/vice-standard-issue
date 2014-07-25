@@ -34,6 +34,18 @@ func! vice#standard_issue#diff_close()
     windo if &diff || &ft == 'diff' | q | endif
 endf
 
+" Quit only if in a normal buffer, otherwise close window.
+func! vice#standard_issue#smart_quit()
+    if &pvw
+        pclose
+    elseif &ft == 'qf'
+        lclose
+        cclose
+    else
+        q
+    endif
+endf
+
 " Setup various keymaps for diff
 func! vice#standard_issue#diff_mapping()
     if exists('b:diff_mapping')
