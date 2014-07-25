@@ -1,11 +1,26 @@
 " Trim trailing whitespace from a file
 func! vice#standard_issue#strip_trailing_whitespace()
+    " Store signature setting if necessary
+    let sig_enabled = 0
+    if exists('b:sig_enabled')
+        let sig_enabled = b:sig_enabled
+        let b:sig_enabled = 0
+    endif
+
+    " Set mark so we can restore our position
     normal mZ
+    " Trim trailing whitespace
     %s/\s\+$//e
+    " Restore position
     normal `Z
+    " Clear mark
     normal mZ
+
+    " Restore vim-signature settings
+    let b:sig_enabled = sig_enabled
 endf
 
+" Toggle transparency
 func! vice#standard_issue#transparency_toggle()
     if eval("&transparency") > 0
         set transparency=0
@@ -14,17 +29,18 @@ func! vice#standard_issue#transparency_toggle()
     endif
 endf
 
+" Close diff
 func! vice#standard_issue#diff_close()
     windo if &diff || &ft == 'diff' | q | endif
 endf
 
+" Setup various keymaps for diff
 func! vice#standard_issue#diff_mapping()
     if exists('b:diff_mapping')
         return
     else
         let b:diff_mapping = 1
     endif
-
 
     if &diff
         nnoremap <buffer> ]] ]c
@@ -58,65 +74,75 @@ func! vice#standard_issue#diff_mapping()
     nnoremap <silent> dp dp<C-W>w:if &modifiable && &diff \| let b:old_changedtick = b:changedtick \| endif<CR><C-W>p
 endf
 
+" Indent helpers
 func! vice#standard_issue#indent_obj(inner)
-  let curline = line(".")
-  let lastline = line("$")
-  let i = indent(line(".")) - &shiftwidth * (v:count1 - 1)
-  let i = i < 0 ? 0 : i
-  if getline(".") !~ "^\\s*$"
+    let curline = line('.')
+    let lastline = line('$')
+    let i = indent(line('.')) - &shiftwidth * (v:count1 - 1)
+    let i = i < 0 ? 0 : i
+    if getline('.') !~ '^\\s*$'
+        let p = line('.') - 1
+        let nextblank = getline(p) =~ '^\\s*$'
+        while p > 0 && ((i == 0 && !nextblank) || (i > 0 && ((indent(p) >= i && !(nextblank && a:inner)) || (nextblank && !a:inner))))
+            -
+            let p = line('.') - 1
+            let nextblank = getline(p) =~ '^\\s*$'
+        endwhile
+        normal! 0V
+        call cursor(curline, 0)
+        let p = line('.') + 1
+        let nextblank = getline(p) =~ '^\\s*$'
+        while p <= lastline && ((i == 0 && !nextblank) || (i > 0 && ((indent(p) >= i && !(nextblank && a:inner)) || (nextblank && !a:inner))))
+            +
+            let p = line('.') + 1
+            let nextblank = getline(p) =~ '^\\s*$'
+        endwhile
+        normal! $
+    endif
+endf
+
+func! vice#standard_issue#indent_obj_inc_blank(inner)
+    let curline = line(".")
+    let lastline = line("$")
+    let i = indent(line(".")) - &shiftwidth * (v:count1 - 1)
+    let i = i < 0 ? 0 : i
+
+    if getline(".") =~ "^\\s*$"
+        return
+    endif
+
     let p = line(".") - 1
     let nextblank = getline(p) =~ "^\\s*$"
-    while p > 0 && ((i == 0 && !nextblank) || (i > 0 && ((indent(p) >= i && !(nextblank && a:inner)) || (nextblank && !a:inner))))
-      -
-      let p = line(".") - 1
-      let nextblank = getline(p) =~ "^\\s*$"
+
+    while p > 0 && (nextblank || indent(p) >= i )
+        -
+        let p = line(".") - 1
+        let nextblank = getline(p) =~ "^\\s*$"
     endwhile
+
+    if (!a:inner)
+        -
+    endif
+
     normal! 0V
     call cursor(curline, 0)
     let p = line(".") + 1
     let nextblank = getline(p) =~ "^\\s*$"
-    while p <= lastline && ((i == 0 && !nextblank) || (i > 0 && ((indent(p) >= i && !(nextblank && a:inner)) || (nextblank && !a:inner))))
-      +
-      let p = line(".") + 1
-      let nextblank = getline(p) =~ "^\\s*$"
+
+    while p <= lastline && (nextblank || indent(p) >= i )
+        +
+        let p = line(".") + 1
+        let nextblank = getline(p) =~ "^\\s*$"
     endwhile
+
+    if (!a:inner)
+        +
+    endif
+
     normal! $
-  endif
 endf
 
-func! vice#standard_issue#indent_obj_inc_blank(inner)
-  let curline = line(".")
-  let lastline = line("$")
-  let i = indent(line(".")) - &shiftwidth * (v:count1 - 1)
-  let i = i < 0 ? 0 : i
-  if getline(".") =~ "^\\s*$"
-    return
-  endif
-  let p = line(".") - 1
-  let nextblank = getline(p) =~ "^\\s*$"
-  while p > 0 && (nextblank || indent(p) >= i )
-    -
-    let p = line(".") - 1
-    let nextblank = getline(p) =~ "^\\s*$"
-  endwhile
-  if (!a:inner)
-    -
-  endif
-  normal! 0V
-  call cursor(curline, 0)
-  let p = line(".") + 1
-  let nextblank = getline(p) =~ "^\\s*$"
-  while p <= lastline && (nextblank || indent(p) >= i )
-    +
-    let p = line(".") + 1
-    let nextblank = getline(p) =~ "^\\s*$"
-  endwhile
-  if (!a:inner)
-    +
-  endif
-  normal! $
-endf
-
+" Detect long lines and disable various features which slow vim down
 func! vice#standard_issue#detect_long_line()
     if exists('b:__vice_detect_long_line')
         return
@@ -151,44 +177,44 @@ func! vice#standard_issue#detect_long_line()
     call cursor(original_line, 0)
 endf
 
-" helper function to toggle hex mode
+" Toggle hex mode.
 function vice#standard_issue#toggle_hex()
-  " hex mode should be considered a read-only operation
-  " save values for modified and read-only for restoration later,
-  " and clear the read-only flag for now
-  let l:modified=&mod
-  let l:oldreadonly=&readonly
-  let &readonly=0
-  let l:oldmodifiable=&modifiable
-  let &modifiable=1
+    " hex mode should be considered a read-only operation save values for
+    " modified and read-only for restoration later, and clear the read-only flag
+    " for now
+    let l:modified=&mod
+    let l:oldreadonly=&readonly
+    let &readonly=0
+    let l:oldmodifiable=&modifiable
+    let &modifiable=1
 
-  if !exists("b:editHex") || !b:editHex
-    " save old options
-    let b:oldft=&ft
-    let b:oldbin=&bin
-    " set new options
-    setlocal binary " make sure it overrides any textwidth, etc.
-    let &ft="xxd"
-    " set status
-    let b:editHex=1
-    " switch to hex editor
-    %!xxd
-  else
-    " restore old options
-    let &ft=b:oldft
+    if !exists("b:editHex") || !b:editHex
+        " save old options
+        let b:oldft=&ft
+        let b:oldbin=&bin
+        " set new options
+        setlocal binary " make sure it overrides any textwidth, etc.
+        let &ft="xxd"
+        " set status
+        let b:editHex=1
+        " switch to hex editor
+        %!xxd
+    else
+        " restore old options
+        let &ft=b:oldft
 
-    if !b:oldbin
-      setlocal nobinary
+        if !b:oldbin
+            setlocal nobinary
+        endif
+
+        " set status
+        let b:editHex=0
+        " return to normal editing
+        %!xxd -r
     endif
 
-    " set status
-    let b:editHex=0
-    " return to normal editing
-    %!xxd -r
-  endif
-
-  " restore values for modified and read only state
-  let &mod=l:modified
-  let &readonly=l:oldreadonly
-  let &modifiable=l:oldmodifiable
+    " restore values for modified and read only state
+    let &mod=l:modified
+    let &readonly=l:oldreadonly
+    let &modifiable=l:oldmodifiable
 endfunction
