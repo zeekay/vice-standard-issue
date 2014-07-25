@@ -443,7 +443,6 @@ endif
 " }}}
 
 " Hex {{{
-
     " ex command for toggling hex mode - define mapping if desired
     command -bar Hexmode call vice#standard_issue#toggle_hex()
 
