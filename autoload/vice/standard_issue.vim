@@ -3,6 +3,7 @@ func! vice#standard_issue#strip_trailing_whitespace()
     normal mZ
     %s/\s\+$//e
     normal `Z
+    normal mZ
 endf
 
 func! vice#standard_issue#transparency_toggle()
