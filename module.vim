@@ -26,12 +26,12 @@ call vice#Extend({
 \ })
 
 if !exists('g:vice.standard_issue')
-    let g:vice.standard_issue = {'transparency': 5}
+    let g:vice.standard_issue = {'transparency': 2}
 endif
 
 " Abbreviations {{{
     cabbrev ack <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Ack' : 'ack')<CR>
-    cabbrev ag <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Ag' : 'ag')<CR>
+    cabbrev ag  <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Ag' : 'ag')<CR>
     cabbrev sudowrite Sudowrite
     cabbrev sudoedit Sudoedit
 " }}}
