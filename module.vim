@@ -29,6 +29,13 @@ if !exists('g:vice.standard_issue')
     let g:vice.standard_issue = {'transparency': 5}
 endif
 
+" Abbreviations {{{
+    cabbrev ack <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Ack' : 'ack')<CR>
+    cabbrev ag <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Ag' : 'ag')<CR>
+    cabbrev sudowrite Sudowrite
+    cabbrev sudoedit Sudoedit
+" }}}
+
 " Basic/General Configuration {{{
     exe 'set backupdir='.g:vice.addon_dir.'/tmp/backup'
     set backup
