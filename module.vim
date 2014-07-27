@@ -283,9 +283,6 @@ endif
     vnoremap <silent> <c-f> <c-f>
     vnoremap <silent> <c-b> <c-b>
 
-    " Buffer mappings {{{
-    nnoremap <silent> <Leader>d :bd<CR>
-
     " Wincmd mappings
     inoremap <c-w> <c-o><c-w>
     nnoremap <leader>w= <c-w>=
