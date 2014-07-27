@@ -1,11 +1,22 @@
-" Trim trailing whitespace from a file
-func! vice#standard_issue#strip_trailing_whitespace()
+" Disable vim-signature on a given buffer.
+func! vice#standard_issue#signature_disable()
     " Store signature setting if necessary
-    let sig_enabled = 0
+    let b:vice_sig_enabled = 0
     if exists('b:sig_enabled')
-        let sig_enabled = b:sig_enabled
+        let b:vice_sig_enabled = b:sig_enabled
         let b:sig_enabled = 0
     endif
+endf
+
+" Re-enable vim-signature
+func! vice#standard_issue#signature_enable()
+    " Restore vim-signature settings
+    let b:sig_enabled = b:vice_sig_enabled
+endf
+
+" Trim trailing whitespace from a file
+func! vice#standard_issue#strip_trailing_whitespace()
+    call vice#standard_issue#signature_disable()
 
     " Set mark so we can restore our position
     normal mZ
@@ -16,8 +27,7 @@ func! vice#standard_issue#strip_trailing_whitespace()
     " Clear mark
     normal mZ
 
-    " Restore vim-signature settings
-    let b:sig_enabled = sig_enabled
+    call vice#standard_issue#signature_enable()
 endf
 
 " Toggle transparency
