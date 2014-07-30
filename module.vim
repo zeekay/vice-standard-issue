@@ -59,6 +59,7 @@ endif
     set gdefault
     set showcmd
     set noshowmode
+    set noshowcmd
     set virtualedit=block,onemore
     set switchbuf=usetab
     set splitright
