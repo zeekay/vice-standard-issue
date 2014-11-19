@@ -11,9 +11,6 @@ call vice#Extend({
         \ 'github:kshenoy/vim-signature',
     \ ],
     \ 'ft_addons': {
-        \ 'html\|xhtml\|xml': [
-            \ 'github:gregsexton/MatchTag',
-        \ ],
         \ 'help': [
             \ 'github:juanpabloaj/help.vim',
         \ ],
