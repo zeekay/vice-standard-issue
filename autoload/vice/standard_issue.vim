@@ -20,12 +20,12 @@ func! vice#standard_issue#strip_trailing_whitespace()
 
     " Set mark so we can restore our position
     normal mZ
+
     " Trim trailing whitespace
     %s/\s\+$//e
-    " Restore position
-    normal `Z
-    " Clear mark
-    normal mZ
+
+    " Restore position and clear mark
+    normal `ZmZ
 
     call vice#standard_issue#signature_enable()
 endf
