@@ -49,8 +49,14 @@ func! vice#standard_issue#smart_quit()
     if &pvw
         pclose
     elseif &ft == 'qf'
-        lclose
-        cclose
+        wincmd w
+        try
+            " Cannot close last window errors
+            lclose
+            cclose
+        catch
+            q
+        endtry
     else
         q
     endif
