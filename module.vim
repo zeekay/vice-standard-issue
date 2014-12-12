@@ -1,14 +1,15 @@
 call vice#Extend({
     \ 'addons': [
         \ 'github:coderifous/textobj-word-column.vim',
+        \ 'github:kshenoy/vim-signature',
+        \ 'github:tommcdo/vim-exchange',
         \ 'github:tpope/vim-commentary',
         \ 'github:tpope/vim-repeat',
         \ 'github:tpope/vim-speeddating',
         \ 'github:tpope/vim-surround',
+        \ 'github:tpope/vim-unimpaired',
         \ 'github:zeekay/vim-eunuch',
         \ 'github:zeekay/vim-space',
-        \ 'github:tommcdo/vim-exchange',
-        \ 'github:kshenoy/vim-signature',
     \ ],
     \ 'ft_addons': {
         \ 'help': [
