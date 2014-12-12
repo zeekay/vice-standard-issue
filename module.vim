@@ -411,6 +411,13 @@ endif
 
     " Use cx in visual mode for exchange.
     vmap cx <Plug>(Exchange)
+
+    " Hide commentary deprecation warning
+    xmap \\  <Plug>Commentary
+    nmap \\  <Plug>Commentary
+    omap \\  <Plug>Commentary
+    nmap \\\ <Plug>CommentaryLine
+    nmap \\u <Plug>CommentaryUndo
 " }}}
 
 " Diff {{{
