@@ -1,7 +1,6 @@
 call vice#Extend({
     \ 'addons': [
         \ 'github:coderifous/textobj-word-column.vim',
-        \ 'github:kshenoy/vim-signature',
         \ 'github:tommcdo/vim-exchange',
         \ 'github:tpope/vim-commentary',
         \ 'github:tpope/vim-repeat',
@@ -17,9 +16,10 @@ call vice#Extend({
         \ ],
     \ },
     \ 'commands': {
-        \ 'Ack':  ['github:mileszs/ack.vim'],
-        \ 'Ag':   ['github:rking/ag.vim'],
-        \ 'Calc': ['github:gregsexton/VimCalc'],
+        \ 'Ack':             ['github:mileszs/ack.vim'],
+        \ 'Ag':              ['github:rking/ag.vim'],
+        \ 'Calc':            ['github:gregsexton/VimCalc'],
+        \ 'SignatureToggle': ['github:kshenoy/vim-signature'],
     \ }
 \ })
 
