@@ -114,6 +114,16 @@ endif
     if !has('gui_running')
         set ttyfast
         set t_Co=256
+
+        " Make <END> go to after last character in line
+        noremap <END> $l
+        inoremap <END> <ESC>$
+
+        " Fix wonky arrow keys in remote terminals
+        inoremap OA <ESC>ki
+        inoremap OB <ESC>ji
+        inoremap OC <ESC>li
+        inoremap OD <ESC>hi
     endif
 " }}}
 
