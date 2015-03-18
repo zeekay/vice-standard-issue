@@ -120,10 +120,10 @@ endif
         inoremap <silent> <END> <c-o>$
 
         " Fix wonky arrow keys in remote terminals
-        nnoremap <silent> OA <c-o>k
-        nnoremap <silent> OB <c-o>j
-        nnoremap <silent> OC <c-o>l
-        nnoremap <silent> OD <c-o>h
+        nnoremap <silent> OA k
+        nnoremap <silent> OB j
+        nnoremap <silent> OC l
+        nnoremap <silent> OD h
         inoremap <silent> OA <c-o>k
         inoremap <silent> OB <c-o>j
         inoremap <silent> OC <c-o>l
