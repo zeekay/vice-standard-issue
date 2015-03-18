@@ -117,13 +117,13 @@ endif
 
         " Make <END> go to after last character in line
         noremap <END> $l
-        inoremap <END> <ESC>$
+        inoremap <END> <c-o>$
 
         " Fix wonky arrow keys in remote terminals
-        inoremap OA <ESC>ki
-        inoremap OB <ESC>ji
-        inoremap OC <ESC>li
-        inoremap OD <ESC>hi
+        inoremap OA <c-o>k
+        inoremap OB <c-o>j
+        inoremap OC <c-o>l
+        inoremap OD <c-o>h
     endif
 " }}}
 
