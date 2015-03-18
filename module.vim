@@ -116,14 +116,18 @@ endif
         set t_Co=256
 
         " Make <END> go to after last character in line
-        noremap <END> $l
-        inoremap <END> <c-o>$
+        noremap <silent> <END> $l
+        inoremap <silent> <END> <c-o>$
 
         " Fix wonky arrow keys in remote terminals
-        inoremap OA <c-o>k
-        inoremap OB <c-o>j
-        inoremap OC <c-o>l
-        inoremap OD <c-o>h
+        nnoremap <silent> OA <c-o>k
+        nnoremap <silent> OB <c-o>j
+        nnoremap <silent> OC <c-o>l
+        nnoremap <silent> OD <c-o>h
+        inoremap <silent> OA <c-o>k
+        inoremap <silent> OB <c-o>j
+        inoremap <silent> OC <c-o>l
+        inoremap <silent> OD <c-o>h
     endif
 " }}}
 
