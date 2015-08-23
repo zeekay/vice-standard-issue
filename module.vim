@@ -432,6 +432,9 @@ endif
     omap \\  <Plug>Commentary
     nmap \\\ <Plug>CommentaryLine
     nmap \\u <Plug>CommentaryUndo
+
+    " Visually select recently pasted text
+    nnoremap gV `[v`]
 " }}}
 
 " Diff {{{
