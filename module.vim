@@ -35,11 +35,15 @@ endif
 " }}}
 
 " Basic/General Configuration {{{
+    if has('nvim')
+        let &shada="'100,\"100,h,n".g:vice.vim_dir.'/tmp/viminfo.shada'
+    else
+        let &viminfo="'100,\"100,h,n".g:vice.vim_dir.'/tmp/viminfo'
+    endif
     exe 'set backupdir='.g:vice.vim_dir.'/tmp/backup'
     set backup
     set noswapfile
     exe 'set viewdir='.g:vice.vim_dir.'/tmp/view'
-    let &viminfo="'100,\"100,h,n".g:vice.vim_dir.'/tmp/viminfo'
     set history=1000
     set backspace=indent,eol,start
     set matchpairs+=<:>
