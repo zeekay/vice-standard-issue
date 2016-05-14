@@ -341,6 +341,10 @@ endif
         nnoremap <M-K> <C-w>K
         nnoremap <M-H> <C-w>H
         nnoremap <M-L> <C-w>L
+        nnoremap <M-J> <C-w>J
+        nnoremap <M-K> <C-w>K
+        nnoremap <M-H> <C-w>H
+        nnoremap <M-L> <C-w>L
 
         inoremap <M-J> <Esc><C-w>J
         inoremap <M-K> <Esc><C-w>K
@@ -446,6 +450,14 @@ endif
         tnoremap <A-j> <C-\><C-n><C-w>j
         tnoremap <A-k> <C-\><C-n><C-w>k
         tnoremap <A-l> <C-\><C-n><C-w>l
+        nnoremap <A-h> <C-w>h
+        nnoremap <A-j> <C-w>j
+        nnoremap <A-k> <C-w>k
+        nnoremap <A-l> <C-w>l
+        inoremap <A-h> <Esc><C-w>h
+        inoremap <A-j> <Esc><C-w>j
+        inoremap <A-k> <Esc><C-w>k
+        inoremap <A-l> <Esc><C-w>l
     endif
 " }}}
 
