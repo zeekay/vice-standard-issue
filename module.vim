@@ -8,6 +8,7 @@ call vice#Extend({
         \ 'github:tpope/vim-surround',
         \ 'github:tpope/vim-unimpaired',
         \ 'github:zeekay/vim-eunuch',
+        \ 'github:zeekay/vim-space',
     \ ],
     \ 'ft_addons': {
         \ 'help': [
