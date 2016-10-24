@@ -244,14 +244,14 @@ endif
 " }}}
 
 " Fast Escape {{{
-    augroup fastescape
-        au!
-        set notimeout
-        set ttimeout
-        set timeoutlen=10
-        au InsertEnter * set timeout
-        au InsertLeave * set notimeout
-    augroup END
+    " augroup fastescape
+    "     au!
+    "     set notimeout
+    "     set ttimeout
+    "     set timeoutlen=10
+    "     au InsertEnter * set timeout
+    "     au InsertLeave * set notimeout
+    " augroup END
 " }}}
 
 " Remove Trailing Whitespace {{{
