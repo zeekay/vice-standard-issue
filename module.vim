@@ -150,7 +150,7 @@ endif
         set fuoptions=maxvert,maxhorz
         let g:macvim_hig_shift_movement = 1
         let g:macvim_skip_cmd_opt_movement = 1
-        set guifont=Inconsolata-dz:h12
+        set guifont=Hack:10
         set linespace=-1
         nnoremap <D-1> 1gt
         nnoremap <D-1> 1gt
@@ -192,13 +192,13 @@ endif
 
 " Linux gVim {{{
     if has('gui_running') && !has('mac') && !has('win32') && !has('win64')
-        set guifont=DejaVu\ Sans\ Mono\ 8
+        set guifont=Hack\ 10
     endif
 " }}}
 
 " Windows gVim {{{
     if has('gui_running') && has('win32') || has('win64')
-        set guifont=Consolas
+        set guifont=Hack
         cd ~
     endif
 " }}}
