@@ -1,4 +1,4 @@
-call vice#Extend({
+let options = {
     \ 'addons': [
         \ 'github:coderifous/textobj-word-column.vim',
         \ 'github:tommcdo/vim-exchange',
@@ -21,10 +21,23 @@ call vice#Extend({
         \ 'Calc':            ['github:gregsexton/VimCalc'],
         \ 'SignatureToggle': ['github:kshenoy/vim-signature'],
     \ }
-\ })
+\ }
+
+if version > 702
+    let options.addons += ['github:Shougo/vimproc', 'github:Shougo/vimshell']
+    cabbrev shell  <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShell' : 'shell')<CR>
+    cabbrev shelli <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShellInteractive' : 'shelli')<CR>
+endif
 
 if !exists('g:vice.standard_issue')
     let g:vice.standard_issue = {'transparency': 2}
+endif
+
+call vice#Extend(options)
+
+" Fix $PATH issues on mac
+if $PATH == '/usr/bin:/bin:/usr/sbin:/sbin'
+    let $PATH=system("zsh -ic 'echo $PATH'")
 endif
 
 " Abbreviations {{{
@@ -33,7 +46,7 @@ endif
     cabbrev sudowrite Sudowrite
     cabbrev sudoedit Sudoedit
 " }}}
-
+"
 " Basic/General Configuration {{{
     if has('nvim')
         let &shada="'100,\"100,h,n".g:vice.vim_dir.'/tmp/viminfo.shada'
@@ -118,6 +131,7 @@ endif
 " Console {{{
     if !has('gui_running')
         set ttyfast
+        set nolazyredraw
         set t_Co=256
 
         " Make <END> go to after last character in line
