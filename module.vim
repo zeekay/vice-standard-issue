@@ -164,8 +164,8 @@ endif
         set fuoptions=maxvert,maxhorz
         let g:macvim_hig_shift_movement = 1
         let g:macvim_skip_cmd_opt_movement = 1
-        set guifont=Hack:h12
-        set linespace=-1
+        set guifont=Hack:h13
+        set linespace=1
         nnoremap <D-1> 1gt
         nnoremap <D-1> 1gt
         nnoremap <D-2> 2gt
