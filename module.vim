@@ -29,6 +29,15 @@ if version > 702
     cabbrev shelli <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShellInteractive' : 'shelli')<CR>
 endif
 
+if version >= 800
+    call vice#Extend({
+        \ 'addons': [
+            \ 'github:roxma/nvim-yarp',
+            \ 'github:roxma/vim-hug-neovim-rpc',
+        \ ]
+    \ })
+endif
+
 if !exists('g:vice.standard_issue')
     let g:vice.standard_issue = {'transparency': 2}
 endif
