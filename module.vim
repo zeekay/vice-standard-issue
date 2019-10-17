@@ -68,6 +68,7 @@ endif
     exe 'set viewdir='.g:vice.vim_dir.'/tmp/view'
     set history=1000
     set backspace=indent,eol,start
+    set mouse=a
     set matchpairs+=<:>
     set shortmess=aoOsTI
     set hidden
@@ -486,7 +487,7 @@ endif
 " }}}
 
 " Diff {{{
-    set diffopt+=iwhite,context:3
+    set diffopt=filler,iwhite,context:3
     au FileType diff call vice#standard_issue#diff_mapping()
     au FilterWritePre * if &diff | call vice#standard_issue#diff_mapping() | endif
 " }}}
