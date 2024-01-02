@@ -67,7 +67,6 @@ endif
     exe 'set viewdir='.g:vice.vim_dir.'/tmp/view'
     set history=1000
     set backspace=indent,eol,start
-    set mouse=a
     set matchpairs+=<:>
     set shortmess=aoOsTI
     set hidden
